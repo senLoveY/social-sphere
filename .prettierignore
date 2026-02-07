@@ -1,0 +1,26 @@
+# Зависимости
+node_modules/
+dist/
+build/
+
+# Файлы конфигурации
+.eslintrc
+.prettierrc
+
+# Сборки
+*.min.js
+*.min.css
+
+# Изображения
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+
+# Документы
+*.pdf
+
+# IDE
+.vscode/
+.idea/
