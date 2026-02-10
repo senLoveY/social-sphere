@@ -1,0 +1,683 @@
+/* Desktop View */
+
+position: relative;
+width: 1440px;
+height: 1042px;
+overflow-y: scroll;
+
+background: #EDEDED;
+
+
+/* Frame 8 */
+
+position: absolute;
+width: 761px;
+height: 1443px;
+left: 348px;
+top: 86px;
+
+
+
+/* Post2 */
+
+position: absolute;
+width: 700px;
+height: 662px;
+left: 32px;
+top: 742px;
+
+
+
+/* Rectangle 75 */
+
+position: absolute;
+width: 700px;
+height: 611px;
+left: 0px;
+top: 1px;
+
+/* White */
+background: #FFFFFF;
+border-radius: 20px;
+
+
+/* Avatar */
+
+position: absolute;
+width: 37px;
+height: 37px;
+left: 19px;
+top: 16px;
+
+background: url(i.png);
+
+
+/* Aviasales */
+
+position: absolute;
+width: 84px;
+height: 22px;
+left: 68px;
+top: 16px;
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* Подписаться */
+
+position: absolute;
+width: 123px;
+height: 22px;
+left: 158px;
+top: 16px;
+
+/* Body Large */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+/* Primary Blue */
+color: #3498DB;
+
+
+
+/* Недавно наш самолет был угнан. Если вы узнаете людей на фото, отпишите нам. Мы вам подарим по билетику */
+
+position: absolute;
+width: 672px;
+height: 44px;
+left: 19px;
+top: 66px;
+
+/* Body Large */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* 52 минуты назад */
+
+position: absolute;
+width: 121px;
+height: 17px;
+left: 68px;
+top: 39px;
+
+/* Body Small */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* Frame 9 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 16px 336px;
+gap: 202px;
+
+position: absolute;
+width: 700px;
+height: 50.46px;
+left: 0px;
+top: 562px;
+
+
+
+/* Heart */
+
+width: 20px;
+height: 18px;
+
+background: #FFFFFF;
+border: 2px solid #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Message */
+
+width: 18px;
+height: 18.46px;
+
+border: 2px solid #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Share */
+
+width: 18.23px;
+height: 16.83px;
+
+border: 2px solid #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Post1 */
+
+position: absolute;
+width: 700px;
+height: 662px;
+left: 31px;
+top: 93px;
+
+
+
+/* Rectangle 75 */
+
+position: absolute;
+width: 700px;
+height: 636px;
+left: 0px;
+top: 1px;
+
+/* White */
+background: #FFFFFF;
+border-radius: 20px;
+
+
+/* Avatar */
+
+position: absolute;
+width: 37px;
+height: 37px;
+left: 19px;
+top: 16px;
+
+background: url(photo_2026-02-08 15.53.30.jpg);
+
+
+/* Pavel Arsianovich */
+
+position: absolute;
+width: 161px;
+height: 22px;
+left: 68px;
+top: 16px;
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* Друзья */
+
+position: absolute;
+width: 67px;
+height: 22px;
+left: 233px;
+top: 16px;
+
+/* Body Large */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+/* Light Text */
+color: #7F8C8D;
+
+
+
+/* Это с другом на самолете летали. Сейчас дома уже ✈️ P.S. Самые дешевые билеты на Aviasales */
+
+position: absolute;
+width: 500px;
+height: 66px;
+left: 19px;
+top: 66px;
+
+/* Body Large */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* 8 часов назад */
+
+position: absolute;
+width: 101px;
+height: 17px;
+left: 68px;
+top: 39px;
+
+/* Body Small */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* IMG_3954 1 */
+
+position: absolute;
+width: 700px;
+height: 442px;
+left: 0px;
+top: 145px;
+
+background: url(IMG_3954.jpg);
+
+
+/* Frame 9 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 16px 336px;
+gap: 202px;
+
+position: absolute;
+width: 700px;
+height: 50.46px;
+left: 0px;
+top: 587px;
+
+
+
+/* Heart */
+
+width: 20px;
+height: 18px;
+
+background: #FF0000;
+border: 2px solid #FF0000;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Message */
+
+width: 18px;
+height: 18.46px;
+
+border: 2px solid #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Share */
+
+width: 18.23px;
+height: 16.83px;
+
+border: 2px solid #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Status */
+
+position: absolute;
+width: 700px;
+height: 66px;
+left: 31px;
+top: 15px;
+
+
+
+/* Rectangle 75 */
+
+position: absolute;
+width: 700px;
+height: 66px;
+left: 0px;
+top: 1px;
+
+/* White */
+background: #FFFFFF;
+border-radius: 20px;
+
+
+/* Avatar */
+
+position: absolute;
+width: 37px;
+height: 37px;
+left: 19px;
+top: 16px;
+
+background: url(photo_2026-02-08 15.37.40.jpg);
+
+
+/* video-01 */
+
+position: absolute;
+width: 32px;
+height: 32px;
+left: 609px;
+top: 18px;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 29.17%;
+top: 16.67%;
+bottom: 16.67%;
+
+/* Danger Red */
+border: 2.30508px solid #E74C3C;
+
+
+/* Vector */
+
+position: absolute;
+left: 70.83%;
+right: 8.33%;
+top: 27.08%;
+bottom: 27.08%;
+
+/* Danger Red */
+border: 2.30508px solid #E74C3C;
+
+
+/* Vector */
+
+position: absolute;
+left: 41.67%;
+right: 45.83%;
+top: 33.33%;
+bottom: 54.17%;
+
+/* Danger Red */
+border: 2.30508px solid #E74C3C;
+
+
+/* Rectangle 76 */
+
+position: absolute;
+width: 532px;
+height: 37px;
+left: 69px;
+top: 16px;
+
+background: #EDEDED;
+border-radius: 100px;
+
+
+/* Что у ваc нового, Valera? */
+
+position: absolute;
+width: 227px;
+height: 22px;
+left: 86px;
+top: 24px;
+
+/* Body Large */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+/* Dark Text */
+color: #2C3E50;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 93.14%;
+right: 3.43%;
+top: 36.36%;
+bottom: 31.82%;
+
+/* Success Green */
+border: 2px solid #2ECC71;
+
+
+/* IMG_3839 1 */
+
+position: absolute;
+width: 700px;
+height: 442px;
+left: 380px;
+top: 950px;
+
+background: url(IMG_3839.jpg);
+
+
+/* ToolBar */
+
+position: absolute;
+width: 3336px;
+height: 4051px;
+left: -1896px;
+top: 0px;
+
+
+
+/* ToolBar */
+
+position: absolute;
+width: 1440px;
+height: 83px;
+left: 0px;
+top: 0px;
+
+/* Dark Text */
+background: #2C3E50;
+
+
+/* Menu Icons */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 31px 80px;
+gap: 85px;
+
+position: absolute;
+width: 488px;
+height: 82px;
+left: calc(50% - 488px/2);
+top: 1px;
+
+
+
+/* Home */
+
+width: 19px;
+height: 20px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Rectangle 74 */
+
+position: absolute;
+left: 16.39%;
+right: 79.71%;
+top: 37.8%;
+bottom: 37.8%;
+
+/* Secondary Teal */
+border: 2px solid #61C5C6;
+
+
+/* Vector */
+
+width: 18px;
+height: 15px;
+
+/* White */
+border: 2px solid #FFFFFF;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Messeges */
+
+width: 18px;
+height: 18px;
+
+/* White */
+border: 2px solid #FFFFFF;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Vector */
+
+width: 18px;
+height: 15px;
+
+/* White */
+border: 2px solid #FFFFFF;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* Avatar */
+
+position: absolute;
+width: 59px;
+height: 59px;
+left: 1366px;
+top: 13px;
+
+background: url(photo_2026-02-08 15.37.40.jpg);
+
+
+/* Valera Malaychuk */
+
+position: absolute;
+width: 203px;
+height: 29px;
+left: 1155px;
+top: 28px;
+
+/* Heading 2 */
+font-family: 'Visby Round CF';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+display: flex;
+align-items: center;
+
+/* Secondary Teal */
+color: #61C5C6;
+
+
+
+/* SocialSphere */
+
+position: absolute;
+width: 201px;
+height: 43px;
+left: 28px;
+top: 20px;
+
+/* Heading 1 */
+font-family: 'Visby Round CF';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 38px;
+
+/* Primary Blue */
+color: #3498DB;
+
+
+
+/* image 1 */
+
+position: absolute;
+width: 1024px;
+height: 1024px;
+left: -1896px;
+top: 3027px;
+
+background: url(image);
