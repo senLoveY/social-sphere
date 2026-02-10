@@ -43,7 +43,7 @@ if (heading) {
   });
 }
 
-// Notification function (can be used later)
+// Notification function 
 function showNotification(message) {
   console.log('Notification:', message);
 }
