@@ -1,17 +1,108 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SocialSphere</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Настройки профиля пользователя Valery Malaichuk">
+    <title>Profile Settings | Valery Malaichuk</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
 
-  <body>
-    <h1>Добро пожаловать в SocialSphere!</h1>
-    <p>Это стартовая страница нашего веб-приложения.</p>
-    <p>Пример еще одного изменения</p>
-    <p>Тоже инетерсный текст</p>
-    <script src="js/script.js"></script>
-  </body>
+    <!-- Шапка сайта -->
+    <header class="header" itemscope itemtype="https://schema.org/WPHeader">
+        <div class="header__container">
+            <div class="header__info">
+                <!-- headline - основной заголовок страницы -->
+                <h1 class="header__title" itemprop="headline">Welcome, Valery!</h1>
+                <time class="header__date" datetime="2022-06-07" itemprop="datePublished">Mon, 23 Febuary 2026</time>
+            </div>
+            
+            <div class="header__actions">
+                <input type="search" class="header__search" placeholder="Search...">
+                <img src="images/valery_avatar.jpg" alt="Avatar" class="header__avatar" width="40">
+            </div>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <aside class="sidebar">
+            <nav class="sidebar__nav">
+                <ul class="sidebar__list">
+                    <li class="sidebar__item"><a href="#" class="sidebar__link">Profile</a></li>
+                    <li class="sidebar__item"><a href="#" class="sidebar__link">Messages</a></li>
+                    <li class="sidebar__item"><a href="#" class="sidebar__link sidebar__link--active">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Основной контент страницы -->
+        <main class="main-content" id="main-content" itemprop="mainContentOfPage">
+            
+            <!-- Описываем сущность "Человек" (Person) -->
+            <article class="profile-card" itemscope itemtype="https://schema.org/Person">
+                <div class="profile-card__banner"></div>
+                
+                <div class="profile-card__user">
+                    <img src="images/valery_avatar.jpg" alt="User Photo" class="profile-card__avatar" itemprop="image" width="100">
+                    
+                    <div class="profile-card__details">
+                        <h2 class="profile-card__name" itemprop="name">Valery Malaichuk</h2>
+                        <p class="profile-card__email" itemprop="email">valera@gmail.com</p>
+                    </div>
+                    <button type="button" class="profile-card__btn">Edit</button>
+                </div>
+
+                <!-- Секция настроек -->
+                <div class="settings" itemprop="description">
+                    <form class="settings-form" action="#">
+                        <div class="settings-form__grid">
+                            <div class="settings-form__field">
+                                <label class="settings-form__label" for="full-name">Full Name</label>
+                                <input class="settings-form__input" type="text" id="full-name" value="Valery Malaichuk">
+                            </div>
+
+                            <div class="settings-form__field">
+                                <label class="settings-form__label" for="nick-name">Nick Name</label>
+                                <input class="settings-form__input" type="text" id="nick-name">
+                            </div>
+
+                            <div class="settings-form__field">
+                                <label class="settings-form__label" for="gender">Gender</label>
+                                <select class="settings-form__select" id="gender" itemprop="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="settings-form__field">
+                                <label class="settings-form__label" for="country">Country</label>
+                                <select class="settings-form__select" id="country">
+                                    <option>Belarus</option>
+                                    <option>United States</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="email-manager">
+                            <p class="email-manager__info">valera@gmail.com (1 month ago)</p>
+                            <button type="button" class="email-manager__btn">+ Add Email Address</button>
+                        </div>
+                    </form>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="footer" itemscope itemtype="https://schema.org/WPFooter">
+        <div class="footer__container">
+            <p class="footer__copyright">&copy; 2026 <span itemprop="copyrightHolder">Profile Setting Panel</span></p>
+            <nav class="footer__nav">
+                <a href="#" class="footer__link" itemprop="url">Help Center</a>
+                <a href="#" class="footer__link" itemprop="url">Privacy Policy</a>
+            </nav>
+        </div>
+    </footer>
+
+</body>
 </html>
