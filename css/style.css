@@ -1,0 +1,296 @@
+/* Базовые сбросы и переменные */
+:root {
+  --primary-blue: #4c84ff;
+  --bg-light: #f4f7f9;
+  --text-main: #333d47;
+  --text-muted: #8e959c;
+  --card-bg: #ffffff;
+  --input-bg: #f8f9fb;
+  --border-color: #eaeff4;
+  --sidebar-width: 80px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* Шапка сайта */
+.header {
+  background: #fff;
+  padding: 15px 40px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.header__date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__search {
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 10px 15px 10px 40px;
+  border-radius: 8px;
+  width: 300px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+
+.header__avatar {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Контейнер страницы и Сайдбар */
+.page-container {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: #fff;
+  border-right: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.sidebar__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Стилизуем ссылки под иконки как на макете */
+.sidebar__link {
+  display: block;
+  width: 45px;
+  height: 45px;
+  text-indent: -9999px; /* Прячем текст, оставляем место под иконки */
+  border-radius: 8px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.sidebar__link--active {
+  background-color: #eef4ff;
+  color: var(--primary-blue);
+}
+
+/* Заглушки для иконок (в идеале использовать SVG) */
+.sidebar__link::before {
+  content: '•'; /* Вместо этого будут ваши SVG из папки assets */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  text-indent: 0;
+}
+
+/* Основной контент */
+.main-content {
+  flex: 1;
+  padding: 30px 40px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.profile-card__banner {
+  height: 140px;
+  background: linear-gradient(90deg, #d4e5ff 0%, #f8f1d8 100%);
+}
+
+.profile-card__user {
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  margin-top: -50px;
+  margin-bottom: 30px;
+}
+
+.profile-card__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.profile-card__details {
+  flex: 1;
+  padding-top: 50px;
+}
+
+.profile-card__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.profile-card__email {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.profile-card__btn {
+  margin-top: 50px;
+  background: var(--primary-blue);
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Форма настроек */
+.settings {
+  padding: 0 30px 30px;
+}
+
+.settings-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.settings-form__label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.settings-form__input,
+.settings-form__select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid transparent;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.settings-form__input:focus,
+.settings-form__select:focus {
+  border-color: #cbd5e0;
+}
+
+.settings-form__select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="gray" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+}
+
+/* Менеджер email */
+.email-manager {
+  border-top: 1px solid var(--border-color);
+  padding-top: 25px;
+}
+
+.email-manager__info {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Синий значок почты из макета */
+.email-manager__info::before {
+  content: '✉';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #eef4ff;
+  color: var(--primary-blue);
+  border-radius: 8px;
+}
+
+.email-manager__btn {
+  background: #eef4ff;
+  color: var(--primary-blue);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Футер */
+.footer {
+  padding: 20px 40px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__nav {
+  display: flex;
+  gap: 20px;
+}
+
+.footer__link {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer__link:hover {
+  text-decoration: underline;
+}
