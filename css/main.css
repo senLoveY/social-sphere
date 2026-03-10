@@ -1,0 +1,274 @@
+/* Sidebar */
+.sidebar {
+  width: 80px;
+  flex-shrink: 0;
+  background-color: #fff;
+  border-right: 1px solid var(--border-color);
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Стили для квадратика-кнопки */
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Размер кликабельного квадрата */
+  height: 50px;
+  border-radius: var(--radius-sm); /* Скругление углов (8px) */
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.sidebar__link:hover,
+.sidebar__link--active {
+  background-color: var(--primary-light);
+}
+
+.sidebar__icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.sidebar__icon--profile {
+  -webkit-mask: url('../assets/profile.svg') no-repeat center / contain;
+  mask: url('../assets/profile.svg') no-repeat center / contain;
+}
+
+.sidebar__icon--chats {
+  -webkit-mask: url('../assets/chats.svg') no-repeat center / contain;
+  mask: url('../assets/chats.svg') no-repeat center / contain;
+}
+
+.sidebar__icon--settings {
+  -webkit-mask: url('../assets/settings.svg') no-repeat center / contain;
+  mask: url('../assets/settings.svg') no-repeat center / contain;
+}
+
+.sidebar__link:hover .sidebar__icon,
+.sidebar__link--active .sidebar__icon {
+  background-color: var(--primary-color);
+}
+
+/* Основной контент */
+.main-content {
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.profile-card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.profile-card__banner {
+  height: 100px;
+  background: var(--banner-gradient);
+}
+
+/* Flexbox для профиля */
+.profile-card__user {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+  position: relative;
+  margin-top: -50px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.profile-card__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-circle);
+  border: 4px solid var(--card-bg);
+  margin-right: var(--spacing-md);
+}
+
+.profile-card__details {
+  flex: 1;
+  margin-top: 40px;
+}
+
+.profile-card__name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profile-card__email {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.profile-card__btn {
+  margin-top: 40px;
+  width: 100px;
+}
+
+/* Настройки и CSS GRID */
+.settings {
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.settings-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 колонки */
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.settings-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-form__label {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.settings-form__input,
+.settings-form__select {
+  padding: 12px 15px;
+  border: none;
+  background-color: var(--input-bg);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-muted);
+  outline: none;
+}
+
+/* Менеджер email */
+.email-manager__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.email-manager__item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.email-manager__icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Круглый фон для иконки почты (уже должен быть у вас) */
+.email-manager__icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-light); /* Светло-синий фон */
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Сама иконка через CSS Mask */
+.email-manager__svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url('../assets/gmail.svg') no-repeat center / contain;
+  /* background-color и mask в этом случае удаляем */
+}
+
+.email-manager__address {
+  font-weight: 500;
+}
+.email-manager__time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* --- АДАПТИВНОСТЬ (Медиазапросы) --- */
+
+/* Планшеты (до 992px) */
+@media (max-width: 992px) {
+  .header__search {
+    width: 180px;
+  }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; 
+  }
+
+  .header__burger {
+    display: flex; 
+    margin-right: 15px;
+  }
+
+  .header__container {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .header__info {
+    order: 2; 
+    width: 100%;
+  }
+
+  .header__actions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .header__search-box {
+    display: none; 
+  }
+
+  /* Перестроение Grid в 1 колонку */
+  .settings-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card__user {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-card__avatar {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .profile-card__details {
+    margin-top: 0;
+  }
+
+  .profile-card__btn {
+    margin-top: 15px;
+    width: 100%; /* Кнопка на всю ширину */
+  }
+}
+
