@@ -1,0 +1,29 @@
+:root {
+  /* Цветовая палитра */
+  --bg-color: #f5f6fa;
+  --card-bg: #ffffff;
+  --text-main: #202224;
+  --text-muted: #a6a6a6;
+  --primary-color: #4880ff;
+  --primary-light: #eef1fe;
+  --input-bg: #f8f9fb;
+  --border-color: #e2e8f0;
+  
+  /* Градиент */
+  --banner-gradient: linear-gradient(135deg, #a4c8f9 0%, #f4e8d3 100%);
+
+  /* Шрифты и размеры */
+  --font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-circle: 50%;
+  
+  /* Отступы */
+  --spacing-sm: 10px;
+  --spacing-md: 20px;
+  --spacing-lg: 30px;
+  
+  /* Переходы */
+  --transition: all 0.3s ease;
+}
