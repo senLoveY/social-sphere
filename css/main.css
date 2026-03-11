@@ -24,10 +24,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px; /* Размер кликабельного квадрата */
+  width: 50px; 
   height: 50px;
-  border-radius: var(--radius-sm); /* Скругление углов (8px) */
-  text-decoration: none;
+  border-radius: var(--radius-sm); 
   transition: var(--transition);
 }
 
@@ -37,7 +36,6 @@
 }
 
 .sidebar__icon {
-  display: block;
   width: 24px;
   height: 24px;
   background-color: var(--text-muted);
@@ -126,7 +124,7 @@
 
 .settings-form__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 колонки */
+  grid-template-columns: 1fr 1fr ;
   gap: 25px;
   margin-bottom: 40px;
 }
@@ -148,10 +146,8 @@
   border: none;
   background-color: var(--input-bg);
   border-radius: var(--radius-sm);
-  font-family: inherit;
   font-size: 14px;
   color: var(--text-muted);
-  outline: none;
 }
 
 /* Менеджер email */
@@ -179,24 +175,19 @@
   justify-content: center;
 }
 
-/* Круглый фон для иконки почты (уже должен быть у вас) */
 .email-manager__icon {
-  width: 40px;
-  height: 40px;
-  background-color: var(--primary-light); /* Светло-синий фон */
+  background-color: var(--primary-light); 
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Сама иконка через CSS Mask */
 .email-manager__svg {
   display: block;
   width: 20px;
   height: 20px;
   background: url('../assets/gmail.svg') no-repeat center / contain;
-  /* background-color и mask в этом случае удаляем */
 }
 
 .email-manager__address {
@@ -207,16 +198,16 @@
   color: var(--text-muted);
 }
 
-/* --- АДАПТИВНОСТЬ (Медиазапросы) --- */
+/* Медиазапросы */
 
-/* Планшеты (до 992px) */
+/* Планшеты */
 @media (max-width: 992px) {
   .header__search {
     width: 180px;
   }
 }
 
-/* Мобильные устройства (до 768px) */
+/* Мобильные устройства */
 @media (max-width: 768px) {
   .sidebar {
     display: none; 
@@ -234,7 +225,7 @@
   }
 
   .header__info {
-    order: 2; 
+    order: 1; 
     width: 100%;
   }
 
@@ -243,11 +234,10 @@
     justify-content: flex-end;
   }
 
-  .header__search-box {
-    display: none; 
+  .header__search {
+    width: 130px;
   }
 
-  /* Перестроение Grid в 1 колонку */
   .settings-form__grid {
     grid-template-columns: 1fr;
   }
@@ -268,7 +258,14 @@
 
   .profile-card__btn {
     margin-top: 15px;
-    width: 100%; /* Кнопка на всю ширину */
+    width: 100%; 
   }
+}
+
+@media (max-width: 370px){
+  .header__search-box {
+      display: none;
+  }
+
 }
 
