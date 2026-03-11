@@ -15,7 +15,6 @@ body {
   line-height: 1.5;
 }
 
-/* Flexbox для глобального макета */
 .layout {
   display: flex;
   min-height: 100vh;
@@ -28,13 +27,11 @@ body {
   width: 100%;
 }
 
-/* Базовые стили кнопок */
 .btn {
   cursor: pointer;
   border: none;
   border-radius: var(--radius-sm);
   padding: 10px 20px;
-  font-weight: 500;
   transition: var(--transition);
 }
 
