@@ -13,7 +13,7 @@
   --banner-gradient: linear-gradient(135deg, #a4c8f9 0%, #f4e8d3 100%);
 
   /* Шрифты и размеры */
-  --font-family: 'Comic Sans', system-ui, -apple-system, sans-serif;
+  --font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
