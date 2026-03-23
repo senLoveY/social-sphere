@@ -10,9 +10,12 @@
     <title>Profile Settings | Valery Malaichuk</title>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/script.js"></script> 
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/components/modal.js"></script>
 </html>
   </head>
   <body itemscope itemtype="https://schema.org/WebPage">
+    
     <div class="layout">
       <!-- Sidebar (боковая панель) -->
       <aside class="sidebar">
@@ -44,57 +47,51 @@
       <!-- Правая часть контента -->
       <div class="layout__content">
         <!-- Шапка сайта -->
-        <header class="header" itemscope itemtype="https://schema.org/WPHeader">
-          <div class="header__container">
-            <div class="header__burger" id="burger-menu">
-              <span></span><span></span><span></span>
-            </div>
+          <header class="header header--feed" itemscope itemtype="https://schema.org/WPHeader">
+                <div class="header__container">
+                    <!-- ЛОГОТИП SocialSphere — кликабельный, ведет на ленту -->
+                    <a href="feed.html" class="header__logo" aria-label="На главную">
+                        <span class="header__logo-text header__logo--social">Social</span><span class="header__logo-text header__logo--sphere">Sphere</span>
+                    </a>
 
-            <div class="header__info">
-              <h1 class="header__title" itemprop="headline">Welcome, Valery</h1>
-              <time
-                class="header__date"
-                datetime="2026-02-23"
-                itemprop="datePublished"
-                >Mon, 23 February 2026</time
-              >
-            </div>
+                    <div class="header__burger" id="burger-menu">
+                        <span></span><span></span><span></span>
+                    </div>
 
-            <div class="header__actions">
-              <div class="header__search-box">
-                <input
-                  type="search"
-                  class="header__search"
-                  placeholder="Search"
-                />
-              </div>
-              <div class="header__notifications">
-                <span class="header__badge">24</span>
-                <span class="header__icon-bell"></span>
-              </div>
-              <img
-                src="images/valery_avatar.jpg"
-                alt="Avatar"
-                class="header__avatar"
-                width="40"
-              />
-            </div>
-          </div>
+                    <div class="header__info">
+                        <h1 class="header__title" itemprop="headline">Welcome, Valery</h1>
+                        <time class="header__date" datetime="2026-02-23" itemprop="datePublished">Mon, 23 February 2026</time>
+                    </div>
 
-          <nav class="mobile-menu" id="mobile-menu">
-            <ul class="mobile-menu__list">
-              <li class="mobile-menu__item">
-                <a href="#" class="mobile-menu__link">Profile</a>
-              </li>
-              <li class="mobile-menu__item">
-                <a href="#" class="mobile-menu__link">Messages</a>
-              </li>
-              <li class="mobile-menu__item">
-                <a href="#" class="mobile-menu__link">Settings</a>
-              </li>
-            </ul>
-          </nav>
-        </header>
+                    <div class="header__actions">
+                        <div class="header__search-box">
+                            <input type="search" class="header__search" placeholder="Search">
+                        </div>
+                        <div class="header__notifications">
+                            <span class="header__badge">24</span>
+                            <span class="header__icon-bell"></span>
+                        </div>
+                        <img src="images/valery_avatar.jpg" alt="Avatar" class="header__avatar" width="40">
+                    </div>
+                </div>
+
+                <nav class="mobile-menu" id="mobile-menu">
+                    <ul class="mobile-menu__list">
+                        <li class="mobile-menu__item">
+                            <a href="feed.html" class="mobile-menu__link">Лента</a>
+                        </li>
+                        <li class="mobile-menu__item">
+                            <a href="profile.html" class="mobile-menu__link">Профиль</a>
+                        </li>
+                        <li class="mobile-menu__item">
+                            <a href="messages.html" class="mobile-menu__link">Сообщения</a>
+                        </li>
+                        <li class="mobile-menu__item">
+                            <a href="settings.html" class="mobile-menu__link">Настройки</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
         <!-- Основной контент страницы -->
         <main

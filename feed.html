@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SocialSphere — Лента новостей</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/feed.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="sidebar__nav">
+          <ul class="sidebar__list">
+            <li class="sidebar__item">
+              <a
+                href="feed.html"
+                class="sidebar__link sidebar__link--active"
+                aria-label="Лента"
+              >
+                <span class="sidebar__icon sidebar__icon--home"></span>
+              </a>
+            </li>
+            <li class="sidebar__item">
+              <a
+                href="settings.html"
+                class="sidebar__link"
+                aria-label="Профиль"
+              >
+                <span class="sidebar__icon sidebar__icon--profile"></span>
+              </a>
+            </li>
+            <li class="sidebar__item">
+              <a class="sidebar__link" aria-label="Сообщения">
+                <span class="sidebar__icon sidebar__icon--chats"></span>
+              </a>
+            </li>
+            <li class="sidebar__item">
+              <a class="sidebar__link" aria-label="Настройки">
+                <span class="sidebar__icon sidebar__icon--settings"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="layout__content">
+        <!-- Header с логотипом SocialSphere -->
+        <header class="header header--feed">
+          <div class="header__container">
+            <!-- Логотип SocialSphere — кликабельный -->
+            <a href="feed.html" class="header__logo">
+              <span class="header__logo-text header__logo--social">Social</span
+              ><span class="header__logo-text header__logo--sphere"
+                >Sphere</span
+              >
+            </a>
+
+            <div class="header__actions header__actions--feed">
+              <div class="header__search-box">
+                <input
+                  type="search"
+                  class="header__search"
+                  placeholder="Поиск..."
+                />
+              </div>
+              <div class="header__notifications">
+                <span class="header__badge">3</span>
+                <span class="header__icon-bell"></span>
+              </div>
+              <a href="settings.html">
+                <img
+                  src="images/valery_avatar.jpg"
+                  alt="Avatar"
+                  class="header__avatar"
+                  width="40"
+                />
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Feed -->
+        <main class="main-content feed-container">
+          <!-- Форма создания поста (быстрая) -->
+          <div class="create-post-trigger">
+            <div class="create-post-trigger__avatar">
+              <img src="images/valery_avatar.jpg" alt="Ваш аватар" />
+            </div>
+            <button class="create-post-trigger__btn" id="openModalBtn">
+              Что у вас нового, Valera?
+            </button>
+            <div class="create-post-trigger__icons">
+              <button
+                class="create-post-trigger__icon create-post-trigger__icon--photo"
+                title="Добавить фото"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#e74c3c"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+              </button>
+              <button
+                class="create-post-trigger__icon create-post-trigger__icon--video"
+                title="Добавить видео"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#27ae60"
+                  stroke-width="2"
+                >
+                  <polygon points="23 7 16 12 23 17 23 7" />
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Лента постов -->
+          <div class="feed" id="feed">
+            <!-- Посты будут загружаться сюда via JS -->
+          </div>
+
+          <!-- Индикатор загрузки для бесконечной прокрутки -->
+          <div class="loader" id="loader">
+            <div class="loader__spinner"></div>
+            <span>Загрузка постов...</span>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div class="modal" id="createPostModal">
+      <div class="modal__overlay"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 class="modal__title">Создать пост</h3>
+          <button class="modal__close" id="closeModalBtn">&times;</button>
+        </div>
+        <form class="create-post-form" id="createPostForm">
+          <div class="create-post-form__user">
+            <img
+              src="images/valery_avatar.jpg"
+              alt="Ваш аватар"
+              class="create-post-form__avatar"
+            />
+            <span class="create-post-form__name">Valery Malaichuk</span>
+          </div>
+          <textarea
+            class="create-post-form__textarea"
+            id="postContent"
+            placeholder="Что у вас нового, Valera?"
+            required
+          ></textarea>
+          <div class="create-post-form__attachments">
+            <button type="button" class="attachment-btn" title="Добавить фото">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#e74c3c"
+                stroke-width="2"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </button>
+            <button type="button" class="attachment-btn" title="Добавить видео">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#27ae60"
+                stroke-width="2"
+              >
+                <polygon points="23 7 16 12 23 17 23 7" />
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="attachment-btn"
+              title="Добавить эмодзи"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#f39c12"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                <line x1="9" y1="9" x2="9.01" y2="9" />
+                <line x1="15" y1="9" x2="15.01" y2="9" />
+              </svg>
+            </button>
+          </div>
+          <button
+            type="submit"
+            class="btn btn--primary create-post-form__submit"
+          >
+            Опубликовать
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/feed.js"></script>
+  </body>
+</html>
