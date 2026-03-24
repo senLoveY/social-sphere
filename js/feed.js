@@ -74,7 +74,7 @@ function addComment(e, postId) {
     const div = document.createElement('div');
     div.className = 'comment';
     div.innerHTML = `
-        <img src="${currentUser.avatar}" alt="" class="comment__avatar" onerror="this.src='images/default-avatar.jpg'">
+        <img src="${currentUser.avatar}" alt="" class="comment__avatar" onerror="this.src='images/default_avatar.jpg'">
         <div class="comment__content">
             <div class="comment__author">${currentUser.name}</div>
             <div class="comment__text">${text}</div>
@@ -224,7 +224,7 @@ function createPost(e) {
     
     article.innerHTML = `
         <div class="post__header">
-            <img src="${currentUser.avatar}" alt="" class="post__avatar" onerror="this.src='images/default-avatar.jpg'">
+            <img src="${currentUser.avatar}" alt="" class="post__avatar" onerror="this.src='images/default_avatar.jpg'">
             <div class="post__meta">
                 <a href="#" class="post__author">${currentUser.name}</a>
                 <span class="post__time">только что</span>
@@ -260,7 +260,7 @@ function createPost(e) {
         <div class="post__comments hidden" id="comments-${newId}">
             <div class="comments-list" id="comments-list-${newId}"></div>
             <form class="comment-form" onsubmit="addComment(event, ${newId})">
-                <img src="${currentUser.avatar}" alt="" class="comment-form__avatar" onerror="this.src='images/default-avatar.jpg'">
+                <img src="${currentUser.avatar}" alt="" class="comment-form__avatar" onerror="this.src='images/default_avatar.jpg'">
                 <div class="comment-form__input-wrapper">
                     <input type="text" class="comment-form__input" placeholder="Напишите комментарий..." required>
                     <button type="submit" class="comment-form__submit">Отправить</button>

@@ -59,6 +59,10 @@
   mask: url('../assets/settings.svg') no-repeat center / contain;
 }
 
+.sidebar__icon--home{
+  -webkit-mask: url('../assets/home.svg') no-repeat center / contain;
+  mask: url('../assets/home.svg') no-repeat center / contain;
+}
 .sidebar__link:hover .sidebar__icon,
 .sidebar__link--active .sidebar__icon {
   background-color: var(--primary-color);
