@@ -1,96 +1,23 @@
 /**
- * SocialSphere — Лента новостей
- * Реализовано: лайки, комментарии, бесконечная прокрутка, модальное окно
+ * SocialSphere — Лента (3 поста по кругу, HTML-шаблоны)
  */
 
 // ============================================
-// ИМИТАЦИЯ БАЗЫ ДАННЫХ (Mock Data)
+// STATE
 // ============================================
 
-const mockUsers = [
-    { id: 1, name: 'Pavel Arsianovich', avatar: 'images/avatar1.jpg' },
-    { id: 2, name: 'Aviasales', avatar: 'images/avatar2.jpg', isVerified: true },
-    { id: 3, name: 'Maria Ivanova', avatar: 'images/avatar3.jpg' },
-    { id: 4, name: 'Alexey Petrov', avatar: 'images/avatar4.jpg' },
-    { id: 5, name: 'Elena Sidorova', avatar: 'images/avatar5.jpg' }
-];
+let cycleIndex = 0;
+let isLoading = false;
+let postCounter = 3;
 
-const mockComments = [
-    { id: 1, author: mockUsers[2], text: 'Классное фото! 🔥', time: '2 часа назад' },
-    { id: 2, author: mockUsers[3], text: 'Вау, круто!', time: '1 час назад' },
-    { id: 3, author: mockUsers[4], text: 'Хочу туда!', time: '30 минут назад' }
-];
-
-// Генерация постов
-function generatePosts(startId, count) {
-    const posts = [];
-    const contents = [
-        'Это с другом на самолете летали. Сейчас дома уже ✈️\n\nP.S. Самые дешевые билеты на Aviasales',
-        'Недавно наш самолет был угнан. Если вы узнаете людей на фото, отпишите нам. Мы вам подарим по билетику 🎫',
-        'Отличный день для полета! Небо сегодня просто невероятное ☁️✨',
-        'Новое приключение начинается! Куда бы вы хотели полететь?',
-        'Воспоминания о лете... Когда снова в небо? 🛩️',
-        'Техническое обслуживание самолета — это искусство. Каждая деталь важна! 🔧',
-        'Закат из иллюминатора — это волшебство. Никогда не устаю любоваться 🌅',
-        'Первый полет на Ан-2. Незабываемые ощущения!'
-    ];
-
-    const images = [
-        'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
-        'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800',
-        'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=800',
-        null,
-        'https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800',
-        'https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=800',
-        'https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800',
-        'https://images.unsplash.com/photo-1529310399831-ed472b81d589?w=800'
-    ];
-
-    for (let i = 0; i < count; i++) {
-        const id = startId + i;
-        const userIndex = id % mockUsers.length;
-        const contentIndex = id % contents.length;
-
-        posts.push({
-            id: id,
-            author: mockUsers[userIndex],
-            content: contents[contentIndex],
-            image: images[contentIndex],
-            likes: Math.floor(Math.random() * 500) + 10,
-            isLiked: false,
-            comments: id % 3 === 0 ? [mockComments[0], mockComments[1]] : [],
-            time: generateTime(id),
-            showComments: false
-        });
-    }
-    return posts;
-}
-
-function generateTime(id) {
-    const times = ['только что', '5 минут назад', '15 минут назад', '30 минут назад', 
-                   '1 час назад', '2 часа назад', '3 часа назад', '5 часов назад',
-                   'вчера', '2 дня назад'];
-    return times[id % times.length];
-}
-
-// ============================================
-// STATE MANAGEMENT
-// ============================================
-
-const state = {
-    posts: [],
-    currentUser: {
-        id: 999,
-        name: 'Valery Malaichuk',
-        avatar: 'images/valery_avatar.jpg'
-    },
-    page: 1,
-    isLoading: false,
-    hasMorePosts: true
+const currentUser = {
+    id: 999,
+    name: 'Valery Malaichuk',
+    avatar: 'images/valery_avatar.jpg'
 };
 
 // ============================================
-// DOM ELEMENTS
+// DOM
 // ============================================
 
 const feedContainer = document.getElementById('feed');
@@ -102,258 +29,179 @@ const createPostForm = document.getElementById('createPostForm');
 const postContent = document.getElementById('postContent');
 
 // ============================================
-// RENDER FUNCTIONS
-// ============================================
-
-function renderPost(post) {
-    const postEl = document.createElement('article');
-    postEl.className = 'post';
-    postEl.dataset.postId = post.id;
-
-    const verifiedBadge = post.author.isVerified ? '<span title="Подтвержденный аккаунт">✓</span>' : '';
-    const imageHtml = post.image ? `<img src="${post.image}" alt="Post image" class="post__image" loading="lazy">` : '';
-
-    const commentsCount = post.comments.length;
-    const commentsText = commentsCount > 0 ? `${commentsCount} комментариев` : 'Комментарии';
-
-    postEl.innerHTML = `
-        <div class="post__header">
-            <img src="${post.author.avatar}" alt="${post.author.name}" class="post__avatar" 
-                 onerror="this.src='images/default-avatar.jpg'">
-            <div class="post__meta">
-                <a href="#" class="post__author">${post.author.name} ${verifiedBadge}</a>
-                <span class="post__time">${post.time}</span>
-            </div>
-        </div>
-
-        <div class="post__content">${formatContent(post.content)}</div>
-        ${imageHtml}
-
-        <div class="post__stats">
-            <span class="post__likes-count" data-likes="${post.likes}">${post.likes}</span>
-            <span class="post__comments-count" onclick="toggleComments(${post.id})">${commentsText}</span>
-        </div>
-
-        <div class="post__actions">
-            <button class="post__action-btn post__action-btn--like ${post.isLiked ? 'liked' : ''}" 
-                    onclick="toggleLike(${post.id})" aria-label="Нравится">
-                <svg class="post__action-icon" viewBox="0 0 24 24" fill="${post.isLiked ? 'currentColor' : 'none'}" 
-                     stroke="currentColor" stroke-width="2">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-                <span>Нравится</span>
-            </button>
-            <button class="post__action-btn" onclick="toggleComments(${post.id})" aria-label="Комментировать">
-                <svg class="post__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-                <span>Комментировать</span>
-            </button>
-            <button class="post__action-btn" aria-label="Поделиться">
-                <svg class="post__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                    <polyline points="16 6 12 2 8 6"></polyline>
-                    <line x1="12" y1="2" x2="12" y2="15"></line>
-                </svg>
-                <span>Поделиться</span>
-            </button>
-        </div>
-
-        <div class="post__comments ${post.showComments ? '' : 'hidden'}" id="comments-${post.id}">
-            <div class="comments-list" id="comments-list-${post.id}">
-                ${renderComments(post.comments)}
-            </div>
-            <form class="comment-form" onsubmit="addComment(event, ${post.id})">
-                <img src="${state.currentUser.avatar}" alt="Вы" class="comment-form__avatar" 
-                     onerror="this.src='images/default-avatar.jpg'">
-                <div class="comment-form__input-wrapper">
-                    <input type="text" class="comment-form__input" placeholder="Напишите комментарий..." required>
-                    <button type="submit" class="comment-form__submit">Отправить</button>
-                </div>
-            </form>
-        </div>
-    `;
-
-    return postEl;
-}
-
-function renderComments(comments) {
-    if (comments.length === 0) return '';
-
-    return comments.map(comment => `
-        <div class="comment">
-            <img src="${comment.author.avatar}" alt="${comment.author.name}" class="comment__avatar" 
-                 onerror="this.src='images/default-avatar.jpg'">
-            <div class="comment__content">
-                <div class="comment__author">${comment.author.name}</div>
-                <div class="comment__text">${escapeHtml(comment.text)}</div>
-                <div class="comment__time">${comment.time}</div>
-            </div>
-        </div>
-    `).join('');
-}
-
-function formatContent(content) {
-    return content
-        .replace(/\n/g, '<br>')
-        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color: var(--primary-color);">$1</a>');
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// ============================================
-// INTERACTION FUNCTIONS
+// ACTIONS
 // ============================================
 
 function toggleLike(postId) {
-    const post = state.posts.find(p => p.id === postId);
+    const post = document.querySelector(`[data-post-id="${postId}"]`);
     if (!post) return;
 
-    post.isLiked = !post.isLiked;
-    post.likes += post.isLiked ? 1 : -1;
+    const likeBtn = post.querySelector('.post__action-btn--like');
+    const likesCount = post.querySelector('.post__likes-count');
+    const svg = likeBtn.querySelector('svg');
+    
+    const isLiked = likeBtn.classList.contains('liked');
+    let count = parseInt(likesCount.textContent);
 
-    const postEl = document.querySelector(`[data-post-id="${postId}"]`);
-    const likeBtn = postEl.querySelector('.post__action-btn--like');
-    const likesCount = postEl.querySelector('.post__likes-count');
-    const likeIcon = likeBtn.querySelector('svg');
-
-    likeBtn.classList.toggle('liked', post.isLiked);
-    likeIcon.setAttribute('fill', post.isLiked ? 'currentColor' : 'none');
-    likesCount.textContent = post.likes;
-
-    likeBtn.style.transform = 'scale(1.2)';
-    setTimeout(() => likeBtn.style.transform = 'scale(1)', 200);
-
-    savePostsToStorage();
-}
-
-function toggleComments(postId) {
-    const post = state.posts.find(p => p.id === postId);
-    if (!post) return;
-
-    post.showComments = !post.showComments;
-
-    const commentsEl = document.getElementById(`comments-${postId}`);
-    commentsEl.classList.toggle('hidden', !post.showComments);
-
-    if (post.showComments) {
-        setTimeout(() => {
-            const input = commentsEl.querySelector('.comment-form__input');
-            if (input) input.focus();
-        }, 100);
+    if (isLiked) {
+        likeBtn.classList.remove('liked');
+        svg.setAttribute('fill', 'none');
+        likesCount.textContent = count - 1;
+    } else {
+        likeBtn.classList.add('liked');
+        svg.setAttribute('fill', 'currentColor');
+        likesCount.textContent = count + 1;
     }
 }
 
-function addComment(event, postId) {
-    event.preventDefault();
+function toggleComments(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    if (commentsSection) {
+        commentsSection.classList.toggle('hidden');
+    }
+}
 
-    const post = state.posts.find(p => p.id === postId);
-    if (!post) return;
-
-    const form = event.target;
-    const input = form.querySelector('.comment-form__input');
+function addComment(e, postId) {
+    e.preventDefault();
+    const input = e.target.querySelector('.comment-form__input');
     const text = input.value.trim();
-
     if (!text) return;
 
-    const newComment = {
-        id: Date.now(),
-        author: state.currentUser,
-        text: text,
-        time: 'только что'
-    };
+    const list = document.getElementById(`comments-list-${postId}`);
+    const post = document.querySelector(`[data-post-id="${postId}"]`);
+    const commentsCount = post.querySelector('.post__comments-count');
 
-    post.comments.push(newComment);
-
-    const commentsList = document.getElementById(`comments-list-${postId}`);
-    const commentEl = document.createElement('div');
-    commentEl.className = 'comment';
-    commentEl.style.animation = 'fadeIn 0.3s ease';
-    commentEl.innerHTML = `
-        <img src="${newComment.author.avatar}" alt="${newComment.author.name}" class="comment__avatar" 
-             onerror="this.src='images/default-avatar.jpg'">
+    const div = document.createElement('div');
+    div.className = 'comment';
+    div.innerHTML = `
+        <img src="${currentUser.avatar}" alt="" class="comment__avatar" onerror="this.src='images/default-avatar.jpg'">
         <div class="comment__content">
-            <div class="comment__author">${newComment.author.name}</div>
-            <div class="comment__text">${escapeHtml(newComment.text)}</div>
-            <div class="comment__time">${newComment.time}</div>
+            <div class="comment__author">${currentUser.name}</div>
+            <div class="comment__text">${text}</div>
+            <div class="comment__time">только что</div>
         </div>
     `;
-    commentsList.appendChild(commentEl);
+    list.appendChild(div);
 
-    const postEl = document.querySelector(`[data-post-id="${postId}"]`);
-    const commentsCountEl = postEl.querySelector('.post__comments-count');
-    commentsCountEl.textContent = `${post.comments.length} комментари${getCommentWord(post.comments.length)}`;
+    const count = list.children.length;
+    commentsCount.textContent = `${count} комментари${count % 10 === 1 && count % 100 !== 11 ? 'й' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) ? 'я' : 'ев'}`;
 
     input.value = '';
-    savePostsToStorage();
-}
-
-function getCommentWord(count) {
-    if (count % 10 === 1 && count % 100 !== 11) return 'й';
-    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return 'я';
-    return 'ев';
 }
 
 // ============================================
-// INFINITE SCROLL
+// INFINITE SCROLL (ИСПРАВЛЕННЫЙ)
 // ============================================
 
-function loadMorePosts() {
-    if (state.isLoading || !state.hasMorePosts) return;
-
-    state.isLoading = true;
+function loadMore() {
+    if (isLoading) return;
+    isLoading = true;
     loader.classList.remove('hidden');
 
     setTimeout(() => {
-        const newPosts = generatePosts(state.posts.length + 1, 5);
-
-        if (state.page >= 5) {
-            state.hasMorePosts = false;
-            loader.innerHTML = '<span>Больше нет постов</span>';
-        } else {
-            state.posts.push(...newPosts);
-            newPosts.forEach(post => {
-                feedContainer.appendChild(renderPost(post));
-            });
-            state.page++;
+        const templateNum = (cycleIndex % 3) + 1;
+        const originalPost = document.querySelector(`[data-template="${templateNum}"]`);
+        
+        if (originalPost) {
+            const clone = originalPost.cloneNode(true);
+            postCounter++;
+            const newId = Date.now() + Math.random(); // Уникальный ID
+            
+            clone.dataset.postId = newId;
+            clone.removeAttribute('data-template');
+            
+            // Обновляем время
+            const timeEl = clone.querySelector('.post__time');
+            timeEl.textContent = 'только что';
+            
+            // Сбрасываем лайки
+            const likeBtn = clone.querySelector('.post__action-btn--like');
+            likeBtn.classList.remove('liked');
+            likeBtn.setAttribute('onclick', `toggleLike(${newId})`);
+            const svg = likeBtn.querySelector('svg');
+            svg.setAttribute('fill', 'none');
+            
+            // Обновляем счетчик лайков
+            const likesCount = clone.querySelector('.post__likes-count');
+            likesCount.textContent = '0';
+            
+            // Обновляем onclick для комментариев
+            const commentsCount = clone.querySelector('.post__comments-count');
+            commentsCount.setAttribute('onclick', `toggleComments(${newId})`);
+            commentsCount.textContent = 'Комментарии';
+            
+            const commentBtn = clone.querySelectorAll('.post__action-btn')[1];
+            commentBtn.setAttribute('onclick', `toggleComments(${newId})`);
+            
+            // Обновляем ID секции комментариев
+            const commentsSection = clone.querySelector('.post__comments');
+            commentsSection.id = `comments-${newId}`;
+            commentsSection.classList.add('hidden');
+            
+            const commentsList = clone.querySelector('.comments-list');
+            commentsList.id = `comments-list-${newId}`;
+            commentsList.innerHTML = '';
+            
+            // Обновляем форму
+            const form = clone.querySelector('.comment-form');
+            form.setAttribute('onsubmit', `addComment(event, ${newId})`);
+            
+            feedContainer.appendChild(clone);
+            
+            console.log(`Добавлен пост #${postCounter} (шаблон ${templateNum})`);
         }
 
-        state.isLoading = false;
-        if (state.hasMorePosts) loader.classList.add('hidden');
-
-    }, 800);
+        cycleIndex++;
+        isLoading = false;
+        
+        // Проверяем, нужно ли подгрузить еще
+        checkIfNeedMore();
+    }, 300);
 }
 
-function setupInfiniteScroll() {
-    const options = {
-        root: null,
-        rootMargin: '100px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                loadMorePosts();
-            }
-        });
-    }, options);
-
-    observer.observe(loader);
+// Проверяем, нужно ли загрузить еще посты
+function checkIfNeedMore() {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    
+    // Если контента мало — грузим еще
+    if (scrollHeight <= clientHeight * 1.5) {
+        loadMore();
+    }
 }
 
 // ============================================
-// MODAL FUNCTIONS
+// SCROLL LISTENER (дополнительно к Observer)
+// ============================================
+
+function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    
+    // Грузим когда дошли до конца минус 300px
+    if (scrollTop + clientHeight >= scrollHeight - 300) {
+        loadMore();
+    }
+}
+
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+        handleScroll();
+        scrollTimeout = null;
+    }, 100);
+});
+
+// ============================================
+// MODAL
 // ============================================
 
 function openModal() {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => postContent.focus(), 100);
+    postContent.focus();
 }
 
 function closeModal() {
@@ -362,126 +210,99 @@ function closeModal() {
     createPostForm.reset();
 }
 
-function handleCreatePost(event) {
-    event.preventDefault();
+function createPost(e) {
+    e.preventDefault();
+    const text = postContent.value.trim();
+    if (!text) return;
 
-    const content = postContent.value.trim();
-    if (!content) return;
+    postCounter++;
+    const newId = Date.now();
 
-    const newPost = {
-        id: Date.now(),
-        author: state.currentUser,
-        content: content,
-        image: null,
-        likes: 0,
-        isLiked: false,
-        comments: [],
-        time: 'только что',
-        showComments: false
-    };
-
-    state.posts.unshift(newPost);
-
-    const postEl = renderPost(newPost);
-    postEl.style.animation = 'fadeIn 0.5s ease';
-    feedContainer.insertBefore(postEl, feedContainer.firstChild);
-
-    closeModal();
-    showNotification('Пост опубликован!');
-    savePostsToStorage();
-}
-
-// ============================================
-// LOCAL STORAGE
-// ============================================
-
-function savePostsToStorage() {
-    try {
-        localStorage.setItem('socialsphere_posts', JSON.stringify(state.posts));
-    } catch (e) {
-        console.warn('Не удалось сохранить в LocalStorage:', e);
-    }
-}
-
-function loadPostsFromStorage() {
-    try {
-        const saved = localStorage.getItem('socialsphere_posts');
-        if (saved) {
-            return JSON.parse(saved);
-        }
-    } catch (e) {
-        console.warn('Не удалось загрузить из LocalStorage:', e);
-    }
-    return null;
-}
-
-// ============================================
-// UTILITIES
-// ============================================
-
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #27ae60;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideIn 0.3s ease;
+    const article = document.createElement('article');
+    article.className = 'post';
+    article.dataset.postId = newId;
+    
+    article.innerHTML = `
+        <div class="post__header">
+            <img src="${currentUser.avatar}" alt="" class="post__avatar" onerror="this.src='images/default-avatar.jpg'">
+            <div class="post__meta">
+                <a href="#" class="post__author">${currentUser.name}</a>
+                <span class="post__time">только что</span>
+            </div>
+        </div>
+        <div class="post__content">${text.replace(/\n/g, '<br>')}</div>
+        <div class="post__stats">
+            <span class="post__likes-count">0</span>
+            <span class="post__comments-count" onclick="toggleComments(${newId})">Комментарии</span>
+        </div>
+        <div class="post__actions">
+            <button class="post__action-btn post__action-btn--like" onclick="toggleLike(${newId})">
+                <svg class="post__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span>Нравится</span>
+            </button>
+            <button class="post__action-btn" onclick="toggleComments(${newId})">
+                <svg class="post__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <span>Комментировать</span>
+            </button>
+            <button class="post__action-btn">
+                <svg class="post__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                    <polyline points="16 6 12 2 8 6"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                </svg>
+                <span>Поделиться</span>
+            </button>
+        </div>
+        <div class="post__comments hidden" id="comments-${newId}">
+            <div class="comments-list" id="comments-list-${newId}"></div>
+            <form class="comment-form" onsubmit="addComment(event, ${newId})">
+                <img src="${currentUser.avatar}" alt="" class="comment-form__avatar" onerror="this.src='images/default-avatar.jpg'">
+                <div class="comment-form__input-wrapper">
+                    <input type="text" class="comment-form__input" placeholder="Напишите комментарий..." required>
+                    <button type="submit" class="comment-form__submit">Отправить</button>
+                </div>
+            </form>
+        </div>
     `;
-    notification.textContent = message;
-    document.body.appendChild(notification);
 
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    feedContainer.insertBefore(article, feedContainer.firstChild);
+    closeModal();
 }
 
 // ============================================
-// INITIALIZATION
+// INIT
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    const savedPosts = loadPostsFromStorage();
-    if (savedPosts && savedPosts.length > 0) {
-        state.posts = savedPosts;
-    } else {
-        state.posts = generatePosts(1, 5);
-    }
-
-    state.posts.forEach(post => {
-        feedContainer.appendChild(renderPost(post));
+    // Загружаем первую партию сразу, если мало контента
+    setTimeout(checkIfNeedMore, 100);
+    
+    // IntersectionObserver как запасной вариант
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            loadMore();
+        }
+    }, { 
+        root: null,
+        rootMargin: '200px',
+        threshold: 0
     });
 
-    setupInfiniteScroll();
+    observer.observe(loader);
 
+    // Modal events
     openModalBtn.addEventListener('click', openModal);
     closeModalBtn.addEventListener('click', closeModal);
-    createPostForm.addEventListener('submit', handleCreatePost);
-
+    createPostForm.addEventListener('submit', createPost);
     modal.querySelector('.modal__overlay').addEventListener('click', closeModal);
-
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeModal();
         }
     });
-
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
 });
