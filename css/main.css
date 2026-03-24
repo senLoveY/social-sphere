@@ -2,7 +2,7 @@
 
 /* Основной контент */
 .main-content {
-  padding: 0 var(--spacing-lg) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg);
 }
 
 .profile-card {
