@@ -1,6 +1,3 @@
-/**
- * SocialSphere — Лента (3 поста по кругу, HTML-шаблоны)
- */
 
 // ============================================
 // STATE
@@ -87,7 +84,33 @@ function addComment(e, postId) {
     commentsCount.textContent = `${count} комментари${count % 10 === 1 && count % 100 !== 11 ? 'й' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) ? 'я' : 'ев'}`;
 
     input.value = '';
+} 
+
+
+// ============================================
+// UTILS
+// ============================================
+
+function getTimeAgo() {
+    const hours = Math.floor(Math.random() * 23) + 1;
+    
+    let text;
+    if (hours === 1) {
+        text = 'час';
+    } else if (hours >= 2 && hours <= 4) {
+        text = 'часа';
+    } else {
+        text = 'часов';
+    }
+    
+    return `${hours} ${text} назад`;
 }
+
+function getLikesCount() {
+    const likes = Math.floor(Math.random() * 1000);
+    return `${likes}`;
+}
+
 
 // ============================================
 // INFINITE SCROLL (ИСПРАВЛЕННЫЙ)
@@ -105,27 +128,23 @@ function loadMore() {
         if (originalPost) {
             const clone = originalPost.cloneNode(true);
             postCounter++;
-            const newId = Date.now() + Math.random(); // Уникальный ID
+            const newId = Date.now() + Math.random(); 
             
             clone.dataset.postId = newId;
             clone.removeAttribute('data-template');
             
-            // Обновляем время
             const timeEl = clone.querySelector('.post__time');
-            timeEl.textContent = 'только что';
+            timeEl.textContent = getTimeAgo();
             
-            // Сбрасываем лайки
             const likeBtn = clone.querySelector('.post__action-btn--like');
             likeBtn.classList.remove('liked');
             likeBtn.setAttribute('onclick', `toggleLike(${newId})`);
             const svg = likeBtn.querySelector('svg');
             svg.setAttribute('fill', 'none');
             
-            // Обновляем счетчик лайков
             const likesCount = clone.querySelector('.post__likes-count');
-            likesCount.textContent = '0';
+            likesCount.textContent = getLikesCount();
             
-            // Обновляем onclick для комментариев
             const commentsCount = clone.querySelector('.post__comments-count');
             commentsCount.setAttribute('onclick', `toggleComments(${newId})`);
             commentsCount.textContent = 'Комментарии';
@@ -133,7 +152,6 @@ function loadMore() {
             const commentBtn = clone.querySelectorAll('.post__action-btn')[1];
             commentBtn.setAttribute('onclick', `toggleComments(${newId})`);
             
-            // Обновляем ID секции комментариев
             const commentsSection = clone.querySelector('.post__comments');
             commentsSection.id = `comments-${newId}`;
             commentsSection.classList.add('hidden');
@@ -142,7 +160,6 @@ function loadMore() {
             commentsList.id = `comments-list-${newId}`;
             commentsList.innerHTML = '';
             
-            // Обновляем форму
             const form = clone.querySelector('.comment-form');
             form.setAttribute('onsubmit', `addComment(event, ${newId})`);
             
@@ -154,24 +171,21 @@ function loadMore() {
         cycleIndex++;
         isLoading = false;
         
-        // Проверяем, нужно ли подгрузить еще
         checkIfNeedMore();
     }, 300);
 }
 
-// Проверяем, нужно ли загрузить еще посты
 function checkIfNeedMore() {
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
     
-    // Если контента мало — грузим еще
     if (scrollHeight <= clientHeight * 1.5) {
         loadMore();
     }
 }
 
 // ============================================
-// SCROLL LISTENER (дополнительно к Observer)
+// SCROLL LISTENER 
 // ============================================
 
 function handleScroll() {
@@ -179,7 +193,6 @@ function handleScroll() {
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
     
-    // Грузим когда дошли до конца минус 300px
     if (scrollTop + clientHeight >= scrollHeight - 300) {
         loadMore();
     }
