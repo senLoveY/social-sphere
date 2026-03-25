@@ -1,6 +1,6 @@
 .header {
   padding: var(--spacing-md) var(--spacing-lg);
-  background: transparent;
+  background-color: #2c3e50;
 }
 
 /* Flexbox для шапки */
@@ -130,4 +130,60 @@
   text-decoration: none;
   color: var(--text-main);
   border-bottom: 1px solid #f0f0f0;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+}
+
+.header__logo:hover {
+    transform: scale(1.02);
+}
+
+.header__logo--social {
+    color: #3498db;
+}
+
+.header__logo--sphere {
+    color: #61c5c6;
+}
+
+/* Для темного хедера (feed) */
+.header--feed .header__logo {
+    font-size: 28px;
+}
+
+.header--feed .header__search {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.header--feed .header__search::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.header--feed .header__notifications {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.header--feed .header__icon-bell {
+    background-color: white;
+}
+
+/* Мобильное меню - пункт Лента */
+.mobile-menu__link {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--text-main);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-menu__link:hover {
+    background: #f5f5f5;
 }

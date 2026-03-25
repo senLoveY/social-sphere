@@ -1,72 +1,8 @@
-/* Sidebar */
 
-
-.sidebar {
-  width: 80px;
-  flex-shrink: 0;
-  background-color: #fff;
-  border-right: 1px solid var(--border-color);
-  padding-top: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sidebar__list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-}
-
-/* Стили для квадратика-кнопки */
-.sidebar__link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px; 
-  height: 50px;
-  border-radius: var(--radius-sm); 
-  transition: var(--transition);
-}
-
-.sidebar__link:hover,
-.sidebar__link--active {
-  background-color: var(--primary-light);
-}
-
-.sidebar__icon {
-  width: 24px;
-  height: 24px;
-  background-color: var(--text-muted);
-  transition: var(--transition);
-}
-
-.sidebar__icon--profile {
-  -webkit-mask: url('../assets/profile.svg') no-repeat center / contain;
-  mask: url('../assets/profile.svg') no-repeat center / contain;
-}
-
-.sidebar__icon--chats {
-  -webkit-mask: url('../assets/chats.svg') no-repeat center / contain;
-  mask: url('../assets/chats.svg') no-repeat center / contain;
-}
-
-.sidebar__icon--settings {
-  -webkit-mask: url('../assets/settings.svg') no-repeat center / contain;
-  mask: url('../assets/settings.svg') no-repeat center / contain;
-}
-
-.sidebar__link:hover .sidebar__icon,
-.sidebar__link--active .sidebar__icon {
-  background-color: var(--primary-color);
-}
 
 /* Основной контент */
 .main-content {
-  padding: 0 var(--spacing-lg) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg);
 }
 
 .profile-card {
@@ -126,7 +62,7 @@
 
 .settings-form__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr ;
+  grid-template-columns: 1fr 1fr;
   gap: 25px;
   margin-bottom: 40px;
 }
@@ -178,7 +114,7 @@
 }
 
 .email-manager__icon {
-  background-color: var(--primary-light); 
+  background-color: var(--primary-light);
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
@@ -212,11 +148,11 @@
 /* Мобильные устройства */
 @media (max-width: 768px) {
   .sidebar {
-    display: none; 
+    display: none;
   }
 
   .header__burger {
-    display: flex; 
+    display: flex;
     margin-right: 15px;
   }
 
@@ -227,7 +163,7 @@
   }
 
   .header__info {
-    order: 1; 
+    order: 1;
     width: 100%;
   }
 
@@ -260,14 +196,12 @@
 
   .profile-card__btn {
     margin-top: 15px;
-    width: 100%; 
+    width: 100%;
   }
 }
 
-@media (max-width: 370px){
+@media (max-width: 370px) {
   .header__search-box {
-      display: none;
+    display: none;
   }
-
 }
-
