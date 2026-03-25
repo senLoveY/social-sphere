@@ -185,29 +185,6 @@ function checkIfNeedMore() {
 }
 
 // ============================================
-// SCROLL LISTENER 
-// ============================================
-
-function handleScroll() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight;
-    
-    if (scrollTop + clientHeight >= scrollHeight - 300) {
-        loadMore();
-    }
-}
-
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    if (scrollTimeout) return;
-    scrollTimeout = setTimeout(() => {
-        handleScroll();
-        scrollTimeout = null;
-    }, 100);
-});
-
-// ============================================
 // MODAL
 // ============================================
 
@@ -291,10 +268,8 @@ function createPost(e) {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Загружаем первую партию сразу, если мало контента
     setTimeout(checkIfNeedMore, 100);
     
-    // IntersectionObserver как запасной вариант
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
             loadMore();
@@ -307,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     observer.observe(loader);
 
-    // Modal events
     openModalBtn.addEventListener('click', openModal);
     closeModalBtn.addEventListener('click', closeModal);
     createPostForm.addEventListener('submit', createPost);
