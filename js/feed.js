@@ -12,7 +12,6 @@ import {
   saveDraft,
   savePendingPostsQueue,
 } from './storage/localStorage.js';
-import { getUiStatus, saveUiStatus } from './storage/sessionStorage.js';
 import {
   escapeHtml,
   formatMinutesAgo,
@@ -68,12 +67,6 @@ function updateStatusBar(message, modifier = 'online') {
     pendingPostsQueue.length,
     `(${modifier})`
   );
-  saveUiStatus({
-    message,
-    modifier,
-    queued: pendingPostsQueue.length,
-    updatedAt: Date.now(),
-  });
 }
 
 function updateDraftIndicator() {
@@ -436,32 +429,11 @@ async function ensureUsersForPosts(remotePosts) {
 }
 
 function getPostUserIdRaw(post) {
-  const candidates = [
-    post?.userId,
-    post?.userID,
-    post?.UserId,
-    post?.UserID,
-    post?.userid,
-    typeof post?.users === 'string' || typeof post?.users === 'number'
-      ? post.users
-      : null,
-    post?.users?.id,
-    post?.user_id,
-    post?.usersId,
-    post?.authorId,
-    typeof post?.user === 'string' || typeof post?.user === 'number'
-      ? post.user
-      : null,
-    post?.user?.id,
-  ];
-
-  for (const raw of candidates) {
-    if (raw === undefined || raw === null) continue;
-    const trimmed = String(raw).trim();
-    if (trimmed !== '') return trimmed;
+  if (post?.userId === undefined || post?.userId === null) {
+    return null;
   }
-
-  return null;
+  const trimmed = String(post.userId).trim();
+  return trimmed !== '' ? trimmed : null;
 }
 
 function lookupMockUser(userId) {
@@ -504,31 +476,10 @@ function isMyRemotePost(post) {
   return false;
 }
 
-function profileFromEmbeddedUserLike(obj) {
-  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return null;
-
-  const embeddedName =
-    obj.name && String(obj.name).trim() ? String(obj.name).trim() : '';
-  if (embeddedName) {
-    return {
-      name: embeddedName,
-      avatar: obj.avatar ?? 'images/default-avatar.jpg',
-    };
-  }
-
-  return null;
-}
-
 function resolveRemotePostProfile(post) {
   if (isMyRemotePost(post)) {
     return { name: currentUser.name, avatar: currentUser.avatar };
   }
-
-  const fromUser = profileFromEmbeddedUserLike(post.user);
-  if (fromUser) return fromUser;
-
-  const fromUsers = profileFromEmbeddedUserLike(post.users);
-  if (fromUsers) return fromUsers;
 
   const postUserId = getPostUserIdRaw(post);
   const apiUser = postUserId !== null ? lookupMockUser(postUserId) : undefined;
@@ -554,7 +505,6 @@ function resolveRemotePostProfile(post) {
   };
 }
 
-/** Перемешивание порядка постов из API перед выводом (Fisher–Yates). */
 function shuffleArray(items) {
   const arr = items;
   for (let i = arr.length - 1; i > 0; i -= 1) {
@@ -808,15 +758,6 @@ function exposeActionsToWindow() {
 document.addEventListener('DOMContentLoaded', async () => {
   exposeActionsToWindow();
 
-  const previousStatus = getUiStatus();
-  if (previousStatus?.message) {
-    console.log(
-      '[SocialSphere] состояние с прошлой сессии:',
-      previousStatus.message,
-      '| В очереди было:',
-      previousStatus.queued ?? '—'
-    );
-  }
   updateStatusBar(
     navigator.onLine
       ? 'Онлайн: можно публиковать посты'
